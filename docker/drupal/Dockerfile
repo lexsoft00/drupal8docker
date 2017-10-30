@@ -16,5 +16,12 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 RUN composer global require drush/drush && \
     composer global update
 
+# Install Drupal Console
+RUN curl https://drupalconsole.com/installer -L -o drupal.phar && \
+    mkdir /usr/local/bin/drupal && \
+    mv drupal.phar /usr/local/bin/drupal && \
+    chmod +x /usr/local/bin/drupal && \
+    sed -i '$ a alias drupal="php /usr/local/bin/drupal/drupal.phar"' ~/.bashrc
+
 # Clean repository
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
